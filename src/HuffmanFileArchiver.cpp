@@ -204,12 +204,12 @@ void HuffmanFileArchiver::printStatistic(HuffmanConstants::HUFFMAN_TASK task)
     {
         case HuffmanConstants::COMPRESS:
             archive_size = (std::size_t)hios.outputTellp() - additional_info_size;
-            printf("%lu\n%lu\n%lu\n", input_size, archive_size, additional_info_size);
+            printf("Архивирование:\nРазмер входных данных: %lu\nРазмер сжатых данных: %lu\nРазмер дополнительной информации: %lu\n", input_size, archive_size, additional_info_size);
             break;
         case HuffmanConstants::DECOMPRESS:
             hios.inputClear();
             archive_size = (std::size_t)hios.inputTellg() - additional_info_size;
-            printf("%lu\n%lu\n%lu\n", archive_size, input_size, additional_info_size);
+            printf("Разархивирование:\nРазмер сжатых данных: %lu\nРазмер входных данных: %lu\nРазмер дополнительной информации: %lu\n", archive_size, input_size, additional_info_size);
             break;
         default:
             break;
