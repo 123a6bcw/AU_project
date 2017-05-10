@@ -136,7 +136,7 @@ void HuffmanFileArchiver::getFrequenciesFromArchive()
     
     for (int i = 0; i < number_of_symbols; i++)
     {
-        hios.readInt(symbol);
+        hios.readInt(symbol);  
         hios.readInt(frequencies[symbol]);
     }
 }
@@ -147,7 +147,7 @@ void HuffmanFileArchiver::decompressInputToOutput()
     HuffmanTree::HuffmanTreeWalker walker(tree); //class for iterating over the tree.
     
     uint64_t number_of_bits_in_compressed_file = 0;
-    hios.readInt(number_of_bits_in_compressed_file); //last few bits in the file could be useless. Knowing total number of bits helps to avoid it
+    hios.readInt(number_of_bits_in_compressed_file); //last few bits in the file could be useless. Knowing total number of bits helps to avoid it  
     uint8_t current_byte = 0;
     
     while (true) //stop condition at the end
