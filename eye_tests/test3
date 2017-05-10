@@ -1,0 +1,6 @@
+#!/bin/bash
+
+../huffman -s -c -f random_data -o random_data_archived
+../huffman -s -u -f random_data_archived -o random_data_decompressed
+
+diff -s -q random_data random_data_decompressed

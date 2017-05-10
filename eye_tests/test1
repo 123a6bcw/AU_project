@@ -1,0 +1,6 @@
+#!/bin/bash
+
+../huffman -s -c -f war.txt -o war_archived
+../huffman -s -u -f war_archived -o war_decompressed
+
+diff -s -q war.txt war_decompressed

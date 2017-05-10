@@ -1,0 +1,6 @@
+#!/bin/bash
+
+../huffman -s -c -f null_data -o null_data_archived
+../huffman -s -u -f null_data_archived -o null_data_decompressed
+
+diff -s -q null_data null_data_decompressed
