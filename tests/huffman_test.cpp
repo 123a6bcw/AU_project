@@ -258,6 +258,7 @@ TEST(HuffmanFileArchivet_test, empty_test_decompress)
     ifstream res("./tests/testfiles/tmp");
     res.get();
     EXPECT_TRUE(res.eof());
+    res.close();
 }
 
 TEST(HuffmanFileArchivet_test, one_byte_test_compress)
@@ -318,6 +319,7 @@ TEST(HuffmanFileArchivet_test, one_byte_test_decompress)
     EXPECT_TRUE(input.get() == '\0');
     input.get();
     EXPECT_TRUE(input.eof());
+    input.close();
 }
 
 TEST(HuffmanFileArchivet_test, many_bytes_compress_decompress)
@@ -336,14 +338,14 @@ TEST(HuffmanFileArchivet_test, many_bytes_compress_decompress)
     HuffmanFileArchiver arch(prm);
     
     arch.doTask(HuffmanConstants::COMPRESS);
-    arch.closeFiles();
+    arch.~HuffmanFileArchiver();
     
     string inp2 = "./tests/testfiles/out";
     string outp2 = "./tests/testfiles/tmp";
     HuffmanConstants::input_parametrs prm2(inp2, outp2, false);
     HuffmanFileArchiver arch2(prm2);
     arch2.doTask(HuffmanConstants::DECOMPRESS);
-    arch2.closeFiles();
+    arch2.~HuffmanFileArchiver();
     
     ifstream input("./tests/testfiles/tmp");
     EXPECT_TRUE(input.get() == '\0');
@@ -353,7 +355,7 @@ TEST(HuffmanFileArchivet_test, many_bytes_compress_decompress)
     bool alright = true;
     for (int i = 0; i < 256; i++)
     {
-        if (t[i] != s[i])
+        if ((char)t[i] != (char)s[i])
         {
             alright = false;
         }
@@ -361,6 +363,7 @@ TEST(HuffmanFileArchivet_test, many_bytes_compress_decompress)
     
     EXPECT_TRUE(alright);
     EXPECT_TRUE((char) input.get() == (char) 1);
+    input.close();
 }
 
 TEST(HuffmanFileArchivet_test, many_bytes_compress)

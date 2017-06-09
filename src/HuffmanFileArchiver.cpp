@@ -136,7 +136,7 @@ void HuffmanFileArchiver::getFrequenciesFromArchive()
     
     for (int i = 0; i < number_of_symbols; i++)
     {
-        hios.readInt(symbol);
+        hios.readInt(symbol);  
         hios.readInt(frequencies[symbol]);
     }
 }
@@ -147,7 +147,7 @@ void HuffmanFileArchiver::decompressInputToOutput()
     HuffmanTree::HuffmanTreeWalker walker(tree); //class for iterating over the tree.
     
     uint64_t number_of_bits_in_compressed_file = 0;
-    hios.readInt(number_of_bits_in_compressed_file); //last few bits in the file could be useless. Knowing total number of bits helps to avoid it
+    hios.readInt(number_of_bits_in_compressed_file); //last few bits in the file could be useless. Knowing total number of bits helps to avoid it  
     uint8_t current_byte = 0;
     
     while (true) //stop condition at the end
@@ -204,12 +204,12 @@ void HuffmanFileArchiver::printStatistic(HuffmanConstants::HUFFMAN_TASK task)
     {
         case HuffmanConstants::COMPRESS:
             archive_size = (std::size_t)hios.outputTellp() - additional_info_size;
-            printf("%lu\n%lu\n%lu\n", input_size, archive_size, additional_info_size);
+            printf("Архивирование:\nРазмер входных данных: %lu\nРазмер сжатых данных: %lu\nРазмер дополнительной информации: %lu\n", input_size, archive_size, additional_info_size);
             break;
         case HuffmanConstants::DECOMPRESS:
             hios.inputClear();
             archive_size = (std::size_t)hios.inputTellg() - additional_info_size;
-            printf("%lu\n%lu\n%lu\n", archive_size, input_size, additional_info_size);
+            printf("Разархивирование:\nРазмер сжатых данных: %lu\nРазмер входных данных: %lu\nРазмер дополнительной информации: %lu\n", archive_size, input_size, additional_info_size);
             break;
         default:
             break;

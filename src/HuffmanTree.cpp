@@ -3,7 +3,22 @@
 HuffmanTree::HuffmanTree(const HuffmanConstants::frequencies_t frequencies[])
 {
     typedef std::pair <HuffmanConstants::frequencies_t, TreeNode*> NodeType; //first is frequence of the node, second is pointer to the node
-    std::priority_queue<NodeType, std::vector<NodeType>, std::greater<NodeType> > nodes; //greater, so it will be min_heap
+    
+    struct TreeNodeGreater
+    {
+        bool operator () (NodeType& a, NodeType& b)
+        {
+            if (a.first != b.first)
+            {
+                return a.first > b.first;
+            } else
+            {
+                return a.second->leaf_symbol < b.second->leaf_symbol; //so tree won't be random at the same data
+            }
+        }
+    };
+    
+    std::priority_queue<NodeType, std::vector<NodeType>, TreeNodeGreater > nodes; //greater, so it will be min_heap
     uint8_t i = 0; //enumeration of all byte values
     do
     {
@@ -31,7 +46,8 @@ HuffmanTree::HuffmanTree(const HuffmanConstants::frequencies_t frequencies[])
         nodes.pop();
         //got two nodes with the smallest frequency
         
-        TreeNode* new_node = new TreeNode(first_node.second, second_node.second, 0); //combine two nodes by their parent, symbol is useless
+        TreeNode* new_node = new TreeNode(first_node.second, second_node.second, first_node.second->leaf_symbol); //combine two nodes by their parent
+                                                                                                                  //leaf_symbol is useless, just unique ID for TreeNode
         HuffmanConstants::frequencies_t new_frequency = first_node.first + second_node.first; //frequency of parent equals to sum of childs freq.
         nodes.push({new_frequency, new_node});
     }
